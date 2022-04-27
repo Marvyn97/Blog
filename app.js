@@ -95,12 +95,12 @@ app.post("/form/:id", (req,res) => {
 /*******************/
 
 app.get("/admin",(req, response)=>{
-    pool.query(`SELECT post.Title, post.Contents, author.FirstName, author.LastName, category.Name 
-    FROM post 
-    JOIN author 
-    ON post.Author_Id = Author.Id 
-    JOIN category 
-    ON Category_Id = category.Id 
+    pool.query(`SELECT Post.Id, Title, Contents, CreationTimestamp, FirstName, LastName, Category.Name AS Category_Name 
+    FROM Post 
+    INNER JOIN Author 
+    ON Post.Author_Id = Author.Id 
+    INNER JOIN Category 
+    ON Post.Category_Id = Category.Id 
     ORDER BY CreationTimestamp DESC`,
     function (err, res) {
         if (err){
@@ -135,6 +135,17 @@ app.get('/edit_post/:id', (req,res)=>{
 
     pool.query('SELECT * FROM Post WHERE id = ?', [id], (err, post)=>{
         res.render('layout', {template: 'edit_post', post: post[0]});
+    });
+});
+
+app.post('/edit_post/:id', (req,res) => {
+    const id = req.params.id;
+
+    pool.query('UPDATE Post SET Title = ?, Contents = ? WHERE Id = ?', [req.body.Title, req.body.Contents, id], (err)=>{
+        if(err){
+            throw err
+        }
+        res.redirect("/admin");
     });
 });
 

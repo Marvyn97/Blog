@@ -12,16 +12,19 @@
         <div>  
             <h1><a href ="/">Mon Blog</a></h1>
             <nav>
-                <a href="/">Home</a>
-
-                
-                    <a href="/admin">Admin</a> 
-
-                
-                     <a href="/logout">logout</a>
+                <a href="/">home</a>
+                <% if (session.user?.role === "admin") { %>
+                    <a href="/admin">admin</a>
                  
+                <% } %>
+                <% if (session.isLogged ) { %>
+                    <a href="/logout">logout</a>
+                 
+                <% } else { %>
                     <a href="/login">login</a>
                     <a href="/register">register</a>
+        
+                <% } %>
                    
             </nav>
         </div>
