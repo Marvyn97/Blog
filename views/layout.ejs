@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Mon Blog de ouf</title>
+</head>
+<body>
+    <header class = "blog-header">
+        <div>  
+            <h1><a href ="/">Mon Blog</a></h1>
+            <nav>
+                <a href="/">home</a>
+                <% if (session.user?.role === "admin") { %>
+                    <a href="/admin">admin</a>
+                 
+                <% } %>
+                <% if (session.isLogged ) { %>
+                    <a href="/logout">logout</a>
+                 
+                <% } else { %>
+                    <a href="/login">login</a>
+                    <a href="/register">register</a>
+        
+                <% } %>
+                   
+            </nav>
+        </div>
+    </header>
+    <%- include(template) -%>
+
+    <footer class= "blog-footer">
+        <p>Le blog des élèves de la 3W Academy</p>
+    </footer>
+</body>
+</html>
